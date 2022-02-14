@@ -14,6 +14,7 @@
     "DOCKERHUB",
     "GOSS",
     "HADOLINT",
+    "helmusr",
     "JSONLINT",
     "KUBE",
     "Roadmap",
