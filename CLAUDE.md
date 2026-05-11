@@ -22,7 +22,7 @@ Primary consumers are the Helm-chart-wrapper repos in K8Box, Atrium, Spectrum, a
 
 ## What's inside?
 
-[Dockerfile](https://git.mon.k8b.co/tcwlab/helm/src/branch/main/Dockerfile):
+[Dockerfile](https://github.com/tcwlab/helm/blob/main/Dockerfile):
 
 - **Stage 1 — `base`**: `alpine:3.23` with `curl`, `tar`, `git`, `bash`, `ca-certificates` from apk.
 - **Stage 2 — `dependencies`**: Architecture-aware download of the Helm binary from `https://get.helm.sh/`. Picks `arm64` or `amd64` based on `apk --print-arch`. Installs to `/usr/local/bin/helm` and runs `helm version --short` as a smoke test inside the build.
