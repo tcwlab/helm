@@ -2,14 +2,14 @@
 # tcwlab/helm
 #
 # Lean Alpine image with pinned Helm version.
-# Image tag corresponds to Helm version: tcwlab/helm:3.16.0
+# Image tag corresponds to Helm version: tcwlab/helm:3.20.2
 #
 # Supported platforms: linux/amd64, linux/arm64
 #
 # Build (multi-arch):
 #   docker buildx build --platform linux/amd64,linux/arm64 \
-#     --build-arg HELM_VERSION=3.16.0 \
-#     -t tcwlab/helm:3.16.0 --push .
+#     --build-arg HELM_VERSION=3.20.2 \
+#     -t tcwlab/helm:3.20.2 --push .
 # ─────────────────────────────────────────────────────────────────────────────
 
 #####
@@ -26,7 +26,7 @@ RUN apk add -U --no-cache curl tar git bash ca-certificates && \
 # STAGE 2: download Helm binary (architecture-aware)
 #####
 FROM base AS dependencies
-ARG HELM_VERSION=3.16.0
+ARG HELM_VERSION=3.20.2
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN case "$(apk --print-arch)" in \
         aarch64) LOCAL_ARCH="arm64" ;; \
@@ -46,7 +46,7 @@ RUN case "$(apk --print-arch)" in \
 # STAGE 3: production image
 #####
 FROM base AS release
-ARG HELM_VERSION=3.16.0
+ARG HELM_VERSION=3.20.2
 
 LABEL org.opencontainers.image.title="helm" \
       org.opencontainers.image.description="helm — pinned version for reproducible CI" \
