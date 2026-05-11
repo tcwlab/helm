@@ -50,16 +50,16 @@ helm-lint:
 
 | Tag                   | Description                                            |
 | --------------------- | ------------------------------------------------------ |
-| `3.16.0`, `3.16`, `3` | Concrete SemVer (recommended for production pipelines) |
+| `3.20.2`, `3.20`, `3` | Concrete SemVer (recommended for production pipelines) |
 | `latest`              | Rolling reference; always points at the newest release |
 
 **Always pin a concrete version in production.** `latest` is fine for local
 experiments, but pinning protects your pipeline from a toolchain bump that
-lands without a PR. The major/minor floating tags (`3`, `3.16`) are
+lands without a PR. The major/minor floating tags (`3`, `3.20`) are
 convenient for internal use; external consumers should pin the full SemVer.
 
 The `helm` image tag **mirrors** the Helm CLI version exactly. When Helm
-3.16.0 is released, `tcwlab/helm:3.16.0` contains that exact version (not a
+3.20.2 is released, `tcwlab/helm:3.20.2` contains that exact version (not a
 wrapper SemVer).
 
 ---
@@ -78,7 +78,7 @@ architecture automatically.
 
 | Tool                              | Version              | Purpose                        |
 | --------------------------------- | -------------------- | ------------------------------ |
-| [`helm`](https://helm.sh/)        | `3.16.0`             | Kubernetes package manager     |
+| [`helm`](https://helm.sh/)        | `3.20.2`             | Kubernetes package manager     |
 | `curl`                            | from Alpine 3.23 apk | Download support               |
 | `tar`                             | from Alpine 3.23 apk | Archive extraction             |
 | `git`                             | from Alpine 3.23 apk | Helm chart repos via git       |
@@ -97,13 +97,13 @@ Base image: `alpine:3.23`. Default workdir: `/workspace`. Default user:
 ### Lint a chart
 
 ```bash
-docker run --rm -v "$PWD:/workspace" tcwlab/helm:3.16.0 lint ./chart
+docker run --rm -v "$PWD:/workspace" tcwlab/helm:3.20.2 lint ./chart
 ```
 
 ### Render templates (smoke test)
 
 ```bash
-docker run --rm -v "$PWD:/workspace" tcwlab/helm:3.16.0 \
+docker run --rm -v "$PWD:/workspace" tcwlab/helm:3.20.2 \
   template ./chart --debug
 ```
 
@@ -115,7 +115,7 @@ To talk to a real cluster, mount your kubeconfig:
 docker run --rm \
   -v "$PWD:/workspace" \
   -v "$HOME/.kube:/home/helmusr/.kube:ro" \
-  tcwlab/helm:3.16.0 \
+  tcwlab/helm:3.20.2 \
   list -A
 ```
 
@@ -126,7 +126,7 @@ helm-lint:
   name: Helm Lint
   runs-on: ubuntu-22.04
   container:
-    image: tcwlab/helm:3.16.0
+    image: tcwlab/helm:3.20.2
   steps:
     - name: Checkout
       env:
@@ -224,7 +224,7 @@ on a Forgejo runner:
 
 The `helm` image version is cut by `semantic-release` from Conventional
 Commits on `main`. The version exactly mirrors the Helm CLI version (e.g.,
-release of Helm 3.16.0 triggers a new `tcwlab/helm:3.16.0` image).
+release of Helm 3.20.2 triggers a new `tcwlab/helm:3.20.2` image).
 
 ---
 

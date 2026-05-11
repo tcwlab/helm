@@ -10,7 +10,7 @@
 
 ## What is `helm`?
 
-`helm` is the container image that bundles a pinned [Helm](https://helm.sh/) CLI, hardened on Alpine 3.23, intended for Forgejo/GitHub Actions `container:` jobs that lint, template, or deploy Kubernetes Helm charts in CI. The image tag mirrors the Helm CLI version exactly (`tcwlab/helm:3.16.0` contains Helm 3.16.0), so consumer pipelines can pin a concrete Helm version without surprises.
+`helm` is the container image that bundles a pinned [Helm](https://helm.sh/) CLI, hardened on Alpine 3.23, intended for Forgejo/GitHub Actions `container:` jobs that lint, template, or deploy Kubernetes Helm charts in CI. The image tag mirrors the Helm CLI version exactly (`tcwlab/helm:3.20.2` contains Helm 3.20.2), so consumer pipelines can pin a concrete Helm version without surprises.
 
 This image grew out of the *adopt-not-build* book examples (`Buecher/adopt-not-build-examples/02-companion-helm/`) and the broader pattern across TCW verticals where a Helm-chart wrapper sits in front of an OSS upstream (Zitadel, Authentik, Vault, Cilium, FluxCD, …). Those wrapper repos all need a deterministic, reproducible Helm CLI in their CI — without dragging in `setup-helm` actions, Node.js, or the host runner's pre-installed Helm binary.
 
@@ -32,7 +32,7 @@ Contents:
 
 | Component         | Version            | Purpose                              |
 | ----------------- | ------------------ | ------------------------------------ |
-| Helm CLI          | `3.16.0`           | Kubernetes package manager           |
+| Helm CLI          | `3.20.2`           | Kubernetes package manager           |
 | `curl`            | Alpine 3.23 apk    | Download support                     |
 | `tar`             | Alpine 3.23 apk    | Archive extraction                   |
 | `git`             | Alpine 3.23 apk    | Helm chart repos via git             |
@@ -47,7 +47,7 @@ Intentionally **no** Node.js — the image is meant for shell-based checkout (`g
 
 ## Tool Versions and Pinning Strategy
 
-The image tag **mirrors** the Helm CLI version exactly: `tcwlab/helm:3.16.0` contains Helm 3.16.0. There is no separate wrapper SemVer — the only version-relevant variable is the Helm CLI itself.
+The image tag **mirrors** the Helm CLI version exactly: `tcwlab/helm:3.20.2` contains Helm 3.20.2. There is no separate wrapper SemVer — the only version-relevant variable is the Helm CLI itself.
 
 ### Update Discipline
 
@@ -61,7 +61,7 @@ The image tag **mirrors** the Helm CLI version exactly: `tcwlab/helm:3.16.0` con
 
 `semantic-release` as in the other image repos: auto-tag from Conventional Commits, Forgejo release, Docker Hub push as `tcwlab/helm:<helm-version>-<semver>` (immutable), `tcwlab/helm:<helm-version>` (float), and `tcwlab/helm:latest` (float).
 
-Consumer pipelines pin the concrete `<helm-version>` (e.g. `3.16.0`). `latest` is acceptable for local experiments but not for production CI — see [`tcwlab/CLAUDE.md`](../CLAUDE.md) for the consumer-side pinning discipline.
+Consumer pipelines pin the concrete `<helm-version>` (e.g. `3.20.2`). `latest` is acceptable for local experiments but not for production CI — see [`tcwlab/CLAUDE.md`](../CLAUDE.md) for the consumer-side pinning discipline.
 
 ---
 
@@ -93,7 +93,7 @@ Consumer pipelines pin the concrete `<helm-version>` (e.g. `3.16.0`). `latest` i
 helm-lint:
   runs-on: ubuntu-22.04
   container:
-    image: tcwlab/helm:3.16.0
+    image: tcwlab/helm:3.20.2
   steps:
     - name: Checkout (shell)
       env:
@@ -119,7 +119,7 @@ helm-lint:
 helm-render:
   runs-on: ubuntu-22.04
   container:
-    image: tcwlab/helm:3.16.0
+    image: tcwlab/helm:3.20.2
   steps:
     - uses: https://data.forgejo.org/actions/checkout@v4
     - run: helm template ./chart > /tmp/rendered.yaml
